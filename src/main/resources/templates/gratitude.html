@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Submit Gratitude</title>
+</head>
+<body>
+    <h2>Submit Gratitude</h2>
+
+    <form th:action="@{/gratitude}" th:object="${gratitude}" method="post">
+        <label>What are you grateful for today?</label><br>
+        <textarea th:field="*{text}" rows="4" cols="50" required></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <br>
+    <a th:href="@{/home}">Back to Home</a>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mood History</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #aaa;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <h2>Mood History</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Mood</th>
+                <th>Time Logged</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="m : ${moods}">
+                <td th:text="${m.date}">2025-06-24</td>
+                <td th:text="${m.mood}">Happy</td>
+                <td th:text="${#temporals.format(m.timestamp, 'HH:mm:ss')}">12:34:56</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/home}">Back to Home</a>
+</body>
+</html>

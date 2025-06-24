@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mood Tracker</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <h2>How are you feeling today?</h2>
+
+    <form th:action="@{/mood}" th:object="${moodForm}" method="post">
+        <label for="mood">Select Mood:</label>
+        <select id="mood" th:field="*{mood}">
+            <option value="" disabled selected>Select mood</option>
+            <option th:each="m : ${moodOptions}" th:value="${m}" th:text="${m}"></option>
+        </select>
+        <br><br>
+
+        <button type="submit">Submit Mood</button>
+    </form>
+
+    <br>
+    <a th:href="@{/home}">Back to Home</a> |
+    <a th:href="@{/mood/history}">View Mood History</a> |
+    <a th:href="@{/mood/chart}">View Mood Chart</a>
+</body>
+</html>

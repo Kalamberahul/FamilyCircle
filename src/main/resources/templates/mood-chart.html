@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mood Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>Your Mood Chart</h2>
+
+    <canvas id="moodChart" width="400" height="200"></canvas>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const moodData = [[${moods}]];
+        const labels = moodData.map(m => m.date);
+        const moodValues = moodData.map(m => m.moodIndex);
+
+        const ctx = document.getElementById('moodChart').getContext('2d');
+        const moodChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Mood Level (1-5)',
+                    data: moodValues,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 5,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const moodIndex = context.parsed.y;
+                                const moodMap = {
+                                    1: "Angry",
+                                    2: "Sad",
+                                    3: "Bored",
+                                    4: "Excited",
+                                    5: "Happy"
+                                };
+                                return `Mood: ${moodMap[moodIndex] || moodIndex}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        min: 0,
+                        max: 5,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+        /*]]>*/
+    </script>
+
+    <br><br>
+    <a th:href="@{/home}">Back to Home</a>
+</body>
+</html>
